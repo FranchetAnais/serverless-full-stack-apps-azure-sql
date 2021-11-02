@@ -13,13 +13,13 @@ jobs:
   
   deploy_database_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    runs-on: windows-latest
+    runs-on: windows-latest 
     name: Deploy Database Job
     steps:
       - uses: actions/checkout@v1
       - uses: Azure/sql-action@v1
         with:
-          server-name: bus-server.database.windows.net
+          server-name: ${{ secrets.SERVER_NAME }}.database.windows.net
           connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
           # uses dacpac to deploy database schema
           dacpac-package: './Database/dacpac/bus-db.dacpac'
